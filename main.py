@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
+from Data.database import obtainHashTags
 import os
 import tweepy
+import random
 
 app = Flask(__name__)
 
@@ -19,13 +21,24 @@ def hello_world():
     photo_url = api.me().profile_image_url
     photo_url_bigger = photo_url[0:len(photo_url) - 11]
     photo_url_bigger = photo_url_bigger + ".jpg"
+
+    hashTags = obtainHashTags()
+    selectedHashTags = []
+    for _ in range(0, 5):
+        value = random.choice(hashTags)
+        while (value in selectedHashTags):
+            value = random.choice(hashTags)
+        selectedHashTags.append(value)
+
     return render_template('index.html',
                            user={
                                'name': api.me().screen_name, 'photo': photo_url_bigger},
                            hashtags=[
-                               {'name': 'BTS', 'url': '/fandom'},
-                               {'name': 'gatos', 'url': '/fandom'},
-                               {'name': 'pandas', 'url': '/fandom'},
+                               {'name': selectedHashTags[0], 'url': '/fandom'},
+                               {'name': selectedHashTags[1], 'url': '/fandom'},
+                               {'name': selectedHashTags[2], 'url': '/fandom'},
+                               {'name': selectedHashTags[3], 'url': '/fandom'},
+                               {'name': selectedHashTags[4], 'url': '/fandom'},
                            ],your_fandoms=[
                                {'name': 'BTS', 'url': '/fandom'},
                                {'name': 'Star Wars', 'url': '/fandom'},
@@ -48,6 +61,15 @@ def fandom(fandom_name="BTS"):
     photo_url = api.me().profile_image_url
     photo_url_bigger = photo_url[0:len(photo_url) - 11]
     photo_url_bigger = photo_url_bigger + ".jpg"
+
+    hashTags = obtainHashTags()
+    selectedHashTags = []
+    for _ in range(0, 3):
+        value = random.choice(hashTags)
+        while (value in selectedHashTags):
+            value = random.choice(hashTags)
+        selectedHashTags.append(value)
+
     return render_template('fandom.html', fandom_name=fandom_name,
                            user={
                                'name': api.me().screen_name, 'photo': photo_url_bigger},
@@ -61,9 +83,9 @@ def fandom(fandom_name="BTS"):
                                {'name': 'pandas', 'url': '#'},
                            ],
                            hashtags=[
-                               {'name': 'perros', 'url': '#'},
-                               {'name': 'gatos', 'url': '#'},
-                               {'name': 'pandas', 'url': '#'},
+                               {'name': selectedHashTags[0], 'url': '/fandom'},
+                               {'name': selectedHashTags[1], 'url': '/fandom'},
+                               {'name': selectedHashTags[2], 'url': '/fandom'},
                            ],
                            tweets=[
                                {'name': 'asdf', 'handle': 'zxcv', 'body': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ante enim, consectetur a libero suscipit, varius mattis lacus. Nulla facilisi. Sed consequat lorem varius molestie efficitur. Praesent vitae accumsan risus. Phasellus convallis rhoncus mi id laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque nec sapien at dolor varius euismod. Nulla eget pretium neque.',

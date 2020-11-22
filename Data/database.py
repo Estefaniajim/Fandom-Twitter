@@ -16,7 +16,7 @@ def create_connection(db_file):
 
 def create_table():
     # SQL STATEMENT TO CREATE OUR ONLY TABLE
-    connection = create_connection(r"Fandom-Twitter\Data\twitterDatabase.db")
+    connection = create_connection(r"Data\twitterDatabase.db")
     sqlHashtagsTable = """CREATE TABLE IF NOT EXISTS HashTags (
                                     id integer PRIMARY KEY,
                                     hashtagName text NOT NULL
@@ -30,7 +30,7 @@ def create_table():
 
 def insertNewHashtag(project):
     # INSERTING DATA INTO OUR UNIQUE TABLE
-    connection = create_connection(r"Fandom-Twitter\Data\twitterDatabase.db")
+    connection = create_connection(r"Data\twitterDatabase.db")
     cur = connection.cursor()
     cur.execute('INSERT INTO HashTags(hashtagName) VALUES(?)', [project])
     connection.commit()
@@ -38,7 +38,7 @@ def insertNewHashtag(project):
 
 def obtainHashTags():
     # OBTAIN ALL CURRENT HASHTAGS IN DATABASE
-    connection = create_connection(r"Fandom-Twitter\Data\twitterDatabase.db")
+    connection = create_connection(r"Data\twitterDatabase.db")
     cur = connection.cursor()
     cur.execute("SELECT * FROM HashTags")
     rows = cur.fetchall()
