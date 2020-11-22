@@ -1,17 +1,17 @@
-from dotenv import load_dotenv
-import os
-import tweepy
+from csv import DictReader
 
-load_dotenv()
-APIkey = os.getenv('APIkey')
-APIsecretkey = os.getenv('APIsecretkey')
-AccessToken = os.getenv("AccessToken")
-AccessTokenSecret = os.getenv("AccessTokenSecret")
+def getTweets():
+    with open("Data/tweetsData2") as file:
+        reader = DictReader(file)
+        dic = {}
+        for line,row in enumerate(reader):
+            dic[line] = [row['user.name'], row["user.screenName"], row["text"], row["retweetCount"], row["favoriteCount"], row["created_at"], row["user.profileImageUrl"]]
+    return dic
 
-auth = tweepy.OAuthHandler(APIkey, APIsecretkey)
-auth.set_access_token(AccessToken, AccessTokenSecret)
-api = tweepy.API(auth)
 
-def dataUser():
-    userDic = {'name': api.me().name, 'photo': api.me().profile_image_url}
-    return userDic
+def getNTweets(n):
+    tweets = []
+    dic = getTweets()
+    for i in range(n):
+        tweets.append(dic[i])
+    return tweets
