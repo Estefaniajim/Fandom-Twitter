@@ -34,7 +34,7 @@ def hello_world():
 
 
 @app.route('/fandom')
-@app.route('/fandom/<fandom_name>')
+@app.route('/fandom/<fandom_name>/<hashtag>')
 def fandom(fandom_name="BTS"):
     load_dotenv()
     APIkey = os.getenv('APIkey')
