@@ -8,7 +8,6 @@ def getTweets():
             dic[line] = [row['user.name'], row["user.screenName"], row["text"], row["retweetCount"], row["favoriteCount"], row["created_at"], row["user.profileImageUrl"]]
     return dic
 
-
 def getNTweets(n):
     tweets = []
     dic = getTweets()
